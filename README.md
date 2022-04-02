@@ -1,5 +1,5 @@
 # robloxsearcherbot
-A Telegram Bot that uses Roblox API to get user's data. 
+A Telegram Bot that uses Roblox API to get user's data. [t.me/robloxsearcherbot](https://t.me/robloxsearcherbot)
 
 ## Usage
 List of commands available:
