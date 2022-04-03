@@ -1,13 +1,14 @@
 # robloxsearcherbot
-A Telegram Bot that uses Roblox API to get user's data. [t.me/robloxsearcherbot](https://t.me/robloxsearcherbot)
+A Telegram Bot that uses Roblox API to get user's data. [t.me/robloxsearchbot](https://t.me/robloxsearchbot)
 
 ## Usage
 List of commands available:
 ```
-/avatar -- Get the avatar of a player
-/status -- Check if a player is online
-/getid -- Get the user ID of a player
-/friends -- Get a list of friends of a player
+/avatar -- Get the avatar of a user
+/status -- Check if a user is online
+/getid -- Get the user ID of a user
+/friends -- Get a short list of friends of a user
+/game -- Sends you a game created by a user
 ```
 
 ## API
