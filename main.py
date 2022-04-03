@@ -30,7 +30,8 @@ List of commands:
 /avatar -- Get the avatar of a user
 /status -- Check if a user is online
 /getid -- Get the user ID of a user
-/friends -- Get a short list of friends of a user""")
+/friends -- Get a short list of friends of a user
+/game -- Sends you a game created by a user""")
 
 
 @bot.message_handler(commands='avatar')
