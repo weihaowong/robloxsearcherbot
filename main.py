@@ -26,6 +26,7 @@ def start(m):
 def help(m):
   bot.send_message(m.chat.id, """
 List of commands:
+                  
 /avatar -- Get the avatar of a user
 /status -- Check if a user is online
 /getid -- Get the user ID of a user
@@ -70,18 +71,19 @@ def status(m):
     lastonline = data['LastOnline']
     Date = lastonline.rpartition('T')[0]
     Time = lastonline.rpartition('T')[2]
+    timeETZ = Time.rpartition('-')[0]
+    ETZ = Time.rpartition('-')[2]
     if isonline == False:
       bot.send_message(m.chat.id, f"""
 {m.text} status:
 
 Currently offline
-Last online: {Date} {Time}""")
+Last online: {Date} {timeETZ} UTC-{ETZ}""")
     else:
       bot.send_message(m.chat.id, f"""
 {m.text} status:
 
-Currently online
-Last online: {Date} {Time}""")
+Currently online in Roblox!!""")
   except:
     bot.send_message(m.chat.id, 'An error occured. Please send the correct username in the correct format.')    
 
@@ -119,10 +121,26 @@ def userid(m):
     userid = data['Id']
     bot.send_message(m.chat.id, f'User ID of {m.text} is {userid}')
   except:
-    bot.send_message(m.chat.id, 'An error occured. Please send the correct username in the correct format.')     
+    bot.send_message(m.chat.id, 'An error occured. Please send the correct username in the correct format.')  
 
-
-
+@bot.message_handler(commands='game')
+def games(m):
+  msg = bot.send_message(m.chat.id, "Send me the user's username to search for a game created by the user.")
+  bot.register_next_step_handler(msg, searchgames)
+def searchgames(m):
+  url = requests.get(f'https://api.roblox.com/users/get-by-username?username={m.text}')
+  text = url.text
+  data = json.loads(text)
+  user = data
+  userid = user['Id']
+  url = requests.get(f'https://games.roblox.com/v2/users/{userid}/games')
+  text = url.text
+  data = json.loads(text)
+  name = data['data'][0]['name']
+  description = data['data'][0]['description']
+  visits = data['data'][0]['placeVisits']
+  bot.send_message(m.chat.id, f"Here's a game created by {m.text}\n\n<b>{name}</b>\n<i>{description}</i>\n\nVisits: {visits}", parse_mode='HTML')
+   
 @bot.message_handler(commands='reply')
 def reply(m):
   if m.chat.id == -1001789761801:
@@ -142,6 +160,6 @@ def get(m):
   bot.send_message(-1001789761801, 
 f"{m.chat.id} \n{m.from_user.first_name} sent a message:")
   bot.send_message(-1001789761801, m.text)
-
+    
 keep_alive()
 bot.infinity_polling()
